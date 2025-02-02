@@ -137,7 +137,7 @@
             chartDiv.innerHTML = "";
 
             var webAppUrl = "https://script.google.com/macros/s/AKfycbz6E-O9oQyA2FLFVc9QrHpYZf4SHNmWq2qwTp_c2WP4_v73vwrZW0XUkoi2xexQPSky/exec"
-                + "?usn=" + encodeURIComponent(usn) + "&dob=" + encodeURIComponent(dob);
+                + "?usn=" + encodeURLComponent(usn) + "&dob=" + encodeURLComponent(dob);
 
             fetch(webAppUrl)
                 .then(response => response.json())
