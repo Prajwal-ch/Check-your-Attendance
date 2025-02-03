@@ -136,17 +136,16 @@
     resultDiv.innerHTML = "";
     chartDiv.innerHTML = "";
 
-    var webAppUrl =
-        "https://script.google.com/macros/s/AKfycbxYZKapoiL4B1MtbKlWAMGBjf-D8x0DayAtvF8bcRcea_tmz30y7oYahk0QStiRCqzO/exec"
+    var webAppUrl = "https://script.google.com/macros/s/AKfycbxYZKapoiL4B1MtbKlWAMGBjf-D8x0DayAtvF8bcRcea_tmz30y7oYahk0QStiRCqzO/exec"
         + "?usn=" + encodeURIComponent(usn) + "&dob=" + encodeURIComponent(dob);
 
     fetch(webAppUrl)
         .then(response => response.json())
         .then(data => {
-            loader.style.display = "none"; // Hide loading
+            loader.style.display = "none";
 
             if (data.error) {
-                resultDiv.innerHTML = <p class='error'>${data.error}</p>;
+                resultDiv.innerHTML = `<p class='error'>${data.error}</p>`;
                 return;
             }
 
@@ -161,7 +160,7 @@
 
             var subjects = {
                 "DS": data["DataStructure"] || 0,
-                "JAVA": data["JAVA "] || 0,
+                "JAVA": data["JAVA"] || 0,
                 "OS": data["OperatingSystem"] || 0,
                 "IC": data["IndianConstitution "] || 0,
                 "KAN/HIN": data["Kannada"] || 0,
