@@ -149,8 +149,9 @@
                 return;
             }
 
-            let overallPercentage = data["Overall Percentage"] || "N/A";
-            overallPercentage = (parseFloat(overallPercentage) * 100).toFixed(2) + "%";
+            let overallPercentage = data["Overall Percentage"] || data["Overall Precentage"] || "N/A";
+            overallPercentage = (parseFloat(overallPercentage) * 100).toFixed(2) + "%"; // Convert to percentage
+
 
             resultDiv.innerHTML = `
                 <h3>Student Details</h3>
@@ -170,13 +171,12 @@
                 "OS_Lab": data["OS_Lab"] || 0
             };
 
-            var dataArray = [["Subject", "Attendance", { role: "style" }, { role: "annotation" }]];
-            var colors = ['#1E88E5', '#43A047', '#F4511E', '#8E24AA', '#FFB300', '#6D4C41', '#00ACC1', '#E53935', '#7CB342'];
+           var dataArray = [["Subject", "Attendance", { role: "style" }]];
+           var colors = ['#1E88E5', '#43A047', '#F4511E', '#8E24AA', '#FFB300', '#6D4C41', '#00ACC1', '#E53935', '#7CB342'];
 
-            Object.entries(subjects).forEach(([key, value], index) => {
-                let attendance = parseFloat(value) * 100 || 0;
-                let annotationText = attendance < 75 ? "Below 75%" : "";
-                dataArray.push([key, attendance, colors[index], annotationText]);
+           Object.entries(subjects).forEach(([key, value], index) => {
+           dataArray.push([key, parseFloat(value) * 100 || 0, colors[index]]);
+
             });
 
             google.charts.load('current', { packages: ['corechart', 'bar'] });
