@@ -179,22 +179,21 @@
 
             });
 
-            google.charts.load('current', { packages: ['corechart', 'bar'] });
+          google.charts.load('current', { packages: ['corechart'] });
             google.charts.setOnLoadCallback(function () {
                 var chartData = google.visualization.arrayToDataTable(dataArray);
-
+            
                 var options = {
-                    chart: { title: 'Student Attendance' },
-                    bars: 'horizontal',
+                    title: 'Student Attendance',
                     height: 500,
                     legend: { position: 'none' },
-                    hAxis: {
+                    vAxis: {
                         title: "Attendance (%)",
                         minValue: 0,
                         maxValue: 100,
                         gridlines: { color: "#E0E0E0" }
                     },
-                    vAxis: {
+                    hAxis: {
                         title: "Subjects",
                         textStyle: { fontSize: 12, color: "#333" }
                     },
@@ -204,11 +203,9 @@
                         textStyle: { fontSize: 12, color: 'red' }
                     }
                 };
-
-                var chart = new google.visualization.BarChart(chartDiv);
+            
+                var chart = new google.visualization.ColumnChart(chartDiv);
                 chart.draw(chartData, options);
-
-                document.getElementById('note').classList.remove('hide');
             });
 
         })
