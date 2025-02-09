@@ -207,7 +207,7 @@
                 var chart = new google.visualization.ColumnChart(chartDiv);
                 chart.draw(chartData, options);
 
-                document.getElementById('note').classList.remove('');
+                document.getElementById('note').classList.remove('hide');
             });
 
         })
@@ -235,7 +235,7 @@
         </div>
 
         <div id="result"></div>
-        <p class="" id="note">🔴 <b>75% is the minimum required criteria to appear for the exams.</b></p>
+        <p class="hide" id="note">🔴 <b>75% is the minimum required criteria to appear for the exams.</b></p>
         <div id="chart_div"></div>
     </div>
 </body>
