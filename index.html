@@ -129,7 +129,7 @@
         note.style.display = "none";
         table.style.display = "none";
 
-        var webAppUrl = "https://script.google.com/macros/s/AKfycbxIv7wsXVkswQcXqVfck2cS3GUGv672Qf9AixXgR2CEi2dWwwZKIW6R1DRBPlORcncz/exec";
+        var webAppUrl = "https://script.google.com/macros/s/AKfycby041H7ODdl4BMzkJLfihQN4mdqi-l_-qWlhgpeWDALVVka8c_xs-m-KLGtOxIDzM9f/exec";
         var urlWithParams = `${webAppUrl}?usn=${encodeURIComponent(usn)}&dob=${encodeURIComponent(dob)}`;
 
         try {
@@ -163,8 +163,9 @@
                 let total = data[subject]?.["Total Classes"] ?? 0;
 
                 let percentage = total > 0 ? ((present / total) * 100).toFixed(2) : 0;
+                let absentDates = data[subject]?.["Absent Dates"] ?? "N/A";
                 dataArray.push([subject, parseFloat(percentage), colors[index % colors.length]]);
-                tableBody.innerHTML += `<tr><td>${subject}</td><td>${present}</td><td>${total - present}</td><td>${total}</td></tr>`;
+                tableBody.innerHTML += `<tr><td>${subject}</td><td>${present}</td><td>${total - present}</td><td>${total}</td><td>${absentDates}</td></tr>`;
             });
 
             google.charts.load('current', { packages: ['corechart'] });
@@ -224,7 +225,7 @@
 
         <table id="attendanceTable" style="display: none;">
             <thead>
-                <tr><th>Subject</th><th>Present</th><th>Absent</th><th>Total Classes</th></tr>
+                <tr><th>Subject</th><th>Present</th><th>Absent</th><th>Total Classes</th><th>Absent Dates</th></tr>
             </thead>
             <tbody></tbody>
         </table>
