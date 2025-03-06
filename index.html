@@ -113,12 +113,17 @@
         var loader = document.getElementById("loader");
         var resultDiv = document.getElementById("result");
         var chartDiv = document.getElementById("chart_div");
-        var tableBody = document.querySelector("#attendanceTable tbody");
-        var note = document.getElementById("note");
         var table = document.getElementById("attendanceTable");
+        var tableBody = table ? table.querySelector("tbody") : null;
+        var note = document.getElementById("note");
 
-        if (usn === "" || dob === "") {
+        if (!usn || !dob) {
             alert("Please enter both USN and Date of Birth.");
+            return;
+        }
+
+        if (!tableBody) {
+            console.error("Table body not found!");
             return;
         }
 
@@ -145,7 +150,7 @@
             }
 
             let overallPercentage = data["Overall Percentage"] || data["Overall Precentage"] || "N/A";
-            overallPercentage = (parseFloat(overallPercentage) * 100).toFixed(2) + "%"; // Convert to percentage
+            overallPercentage = (parseFloat(overallPercentage) * 100).toFixed(2) + "%";
 
             resultDiv.innerHTML = `
                 <h3>Student Details</h3>
@@ -159,14 +164,17 @@
             let colors = ['#1E88E5', '#43A047', '#F4511E', '#8E24AA', '#FFB300', '#6D4C41', '#00ACC1', '#E53935', '#7CB342'];
 
             subjects.forEach((subject, index) => {
-                let present = data[subject]?.["Present"] ?? 0;
-                let total = data[subject]?.["Total Classes"] ?? 0;
+            let present = data[subject]?.["Present"] ?? 0;
+            let total = data[subject]?.["Total Classes"] ?? 0;
+            let percentage = total > 0 ? ((present / total) * 100).toFixed(2) : 0;
 
-                let percentage = total > 0 ? ((present / total) * 100).toFixed(2) : 0;
-                let absentDates = data[subject]?.["Absent Dates"] ?? "N/A";
-                dataArray.push([subject, parseFloat(percentage), colors[index % colors.length]]);
-                tableBody.innerHTML += `<tr><td>${subject}</td><td>${present}</td><td>${total - present}</td><td>${total}</td><td>${absentDates}</td></tr>`;
-            });
+            let absentDates = data[subject]?.["Absent Dates"] ?? "N/A";
+            let formattedAbsentDates = Array.isArray(absentDates) ? absentDates.join("<br>") : String(absentDates).replace(/,/g, "<br>");
+
+            dataArray.push([subject, parseFloat(percentage), colors[index % colors.length]]);
+            tableBody.innerHTML += `<tr><td>${subject}</td><td>${present}</td><td>${total - present}</td><td>${total}</td><td>${formattedAbsentDates}</td></tr>`;
+        });
+
 
             google.charts.load('current', { packages: ['corechart'] });
             google.charts.setOnLoadCallback(function () {
@@ -193,7 +201,6 @@
                 var chart = new google.visualization.ColumnChart(chartDiv);
                 chart.draw(chartData, options);
 
-                // Show note and table when data is successfully loaded
                 note.style.display = "block";
                 table.style.display = "table";
             });
@@ -204,6 +211,7 @@
         }
     }
 </script>
+</head>
 
 <body>
     <div class="container">
@@ -230,6 +238,6 @@
             <tbody></tbody>
         </table>
     </div>
-</body>
+
 
 </html>
