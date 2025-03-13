@@ -156,7 +156,7 @@
                 <h3>Student Details</h3>
                 <p><b>USN:</b> ${data["USN number"]}</p>
                 <p><b>Name:</b> ${data["Student Name"]}</p>
-                <p><b>Overall Percentage:</b> ${overallPercentage}</p>`;
+                <!-- <p><b>Overall Percentage:</b> ${overallPercentage}</p> -->`; // Commented out to hide
 
             let subjects = Object.keys(data).filter(subject => subject !== "USN number" && subject !== "Student Name" && subject !== "Overall Percentage");
 
@@ -227,7 +227,7 @@
 
         <div id="result"></div>
         
-        <p id="note" style="display: none;">🔴 <b>75% is the minimum required criteria to appear for the exams.</b></p>
+        <p id="note" style="display: none;">🔴 <b>75% in each subject is compulsory to appear for the exams.</b></p>
 
         <div id="chart_div"></div>
 
